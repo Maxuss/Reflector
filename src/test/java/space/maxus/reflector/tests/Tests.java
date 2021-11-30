@@ -15,9 +15,9 @@ public class Tests {
         RClass<AccessMe> clazz = Reflector.find("space.maxus.reflector.tests.AccessMe");
         assert clazz != null;
         Optional<RField<AccessMe, String>> field = clazz.tryGetField("imNormal");
-        var accessor = field.get().tryAccess(clazz.newInstance()).get();
-        System.out.println(field.get());
+        var accessor = field.get().tryAccess().get();
+        System.out.println(accessor.get());
         accessor.set("New Value");
-        System.out.println(field.get());
+        System.out.println(accessor.get());
     }
 }
