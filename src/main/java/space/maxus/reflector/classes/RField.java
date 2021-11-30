@@ -3,6 +3,7 @@ package space.maxus.reflector.classes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import space.maxus.reflector.Reflectable;
+import space.maxus.reflector.exceptions.ClassInitializationException;
 import space.maxus.reflector.exceptions.FieldException;
 
 import java.util.Optional;
@@ -36,13 +37,31 @@ public class RField<TOwner, TReturn> implements Reflectable {
     }
 
     /**
+     * Receives the accessor of the field or returns null
+     * @return Field accessor or null
+     */
+    @Nullable
+    public RFieldAccessor<TReturn, TOwner> access() throws ClassInitializationException {
+        return access(objectClass.newInstance());
+    }
+
+    /**
      * Tries to receive the accessor of the field
-     * @param owner object to which the field belongs. Can be null if the field is static
+     * @param instance object to which the field belongs. Can be null if the field is static
      * @return Optional-encapsulated field accessor
      */
     @NotNull
-    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess(@Nullable TOwner owner) {
-        return Optional.ofNullable(access(owner));
+    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess(@Nullable TOwner instance) {
+        return Optional.ofNullable(access(instance));
+    }
+
+    /**
+     * Tries to receive the accessor of the field
+     * @return Optional-encapsulated field accessor
+     */
+    @NotNull
+    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess() throws ClassInitializationException {
+        return Optional.ofNullable(access(objectClass.newInstance()));
     }
 
     /**

@@ -51,7 +51,7 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
      *
      * @param value Field value to be set
      */
-    void set(TValue value) {
+    public void set(TValue value) {
         try {
             java.set(inst, value);
         } catch (IllegalAccessException ignored) {
@@ -65,7 +65,7 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
      * @return Optional-encapsulated value of field
      */
     @NotNull
-    Optional<TValue> tryGet() {
+    public Optional<TValue> tryGet() {
         return Optional.ofNullable(get());
     }
 
@@ -74,7 +74,7 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
      * @param value Field value to be set
      * @return Whether it was possible to set value of field
      */
-    boolean trySet(@Nullable TValue value) {
+    public boolean trySet(@Nullable TValue value) {
         try {
             java.set(inst, value);
             return true;
