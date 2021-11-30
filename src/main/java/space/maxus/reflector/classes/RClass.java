@@ -1,14 +1,56 @@
 package space.maxus.reflector.classes;
 
+import space.maxus.reflector.exceptions.ClassInitializationException;
+
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface RClass<TObject> {
-    Class<TObject> java();
-    RClass<TObject> superClass();
-    List<RClass<TObject>> interfaces();
+public class RClass<TObject> {
+    /**
+     * Java alternative of the class
+     */
+    public final Class<TObject> java;
 
-    default TObject newInstance() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        return java().getDeclaredConstructor().newInstance();
+    public RClass(Class<TObject> java) {
+        this.java = java;
+    }
+
+    /**
+     * @return Superclass of the class
+     */
+    public RClass<? super TObject> superClass() {
+        return new RClass<>(java.getSuperclass());
+    }
+
+    /**
+     * @return Interfaces of the class
+     */
+    public List<RClass<?>> interfaces() {
+        return Arrays.stream(java.getInterfaces()).map(RClass::new).collect(Collectors.toList());
+    }
+
+    /**
+     * Grabs a field from the class
+     * @param name Name of the field to access
+     * @param <TValue> Return type of the class
+     * @return RField instance of the field
+     */
+    public <TValue> RField<TObject, TValue> field(String name) {
+        return new RField<>(this, name);
+    }
+
+    /**
+     * Tries to instantiate class
+     * @return New instance of the class
+     * @throws ClassInitializationException If java could not instantiate the class
+     */
+    public TObject newInstance() throws ClassInitializationException {
+        try {
+            return java.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new ClassInitializationException("Could not initialize class!" + e.getMessage());
+        }
     }
 }

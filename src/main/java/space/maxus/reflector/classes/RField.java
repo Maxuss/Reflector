@@ -2,21 +2,24 @@ package space.maxus.reflector.classes;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import space.maxus.reflector.Reflectable;
+import space.maxus.reflector.exceptions.FieldException;
 
 import java.util.Optional;
 
-public interface RField<TOwner, TReturn> extends RProperty {
-    /**
-     * @return RClass of the object value of field
-     */
-    @NotNull
-    RClass<TOwner> objectClass();
+public class RField<TOwner, TReturn> implements Reflectable {
+    @NotNull private final RClass<TOwner> objectClass;
 
     /**
-     * @return RClass of the return value of field
+     * Name of the field
      */
     @NotNull
-    RClass<TReturn> valueClass();
+    public final String name;
+
+    RField(@NotNull RClass<TOwner> owner,  @NotNull String name) {
+        objectClass = owner;
+        this.name = name;
+    }
 
     /**
      * Receives the accessor of the field or returns null
@@ -24,7 +27,13 @@ public interface RField<TOwner, TReturn> extends RProperty {
      * @return Field accessor or null
      */
     @Nullable
-    RFieldAccessor<TReturn> access(@Nullable TOwner owner);
+    public RFieldAccessor<TReturn, TOwner> access(@Nullable TOwner owner) {
+        try {
+            return new RFieldAccessor<>(objectClass, owner, name);
+        } catch (FieldException e) {
+            return null;
+        }
+    }
 
     /**
      * Tries to receive the accessor of the field
@@ -32,5 +41,15 @@ public interface RField<TOwner, TReturn> extends RProperty {
      * @return Optional-encapsulated field accessor
      */
     @NotNull
-    Optional<RFieldAccessor<TReturn>> tryAccess(@Nullable TOwner owner);
+    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess(@Nullable TOwner owner) {
+        return Optional.ofNullable(access(owner));
+    }
+
+    /**
+     * @return Owner RClass of the current reflectable
+     */
+    @Override
+    public RClass<?> owner() {
+        return objectClass;
+    }
 }
