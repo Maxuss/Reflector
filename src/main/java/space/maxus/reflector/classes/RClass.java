@@ -8,7 +8,7 @@ public interface RClass<TObject> {
     RClass<TObject> superClass();
     List<RClass<TObject>> interfaces();
 
-    default TObject newI() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    default TObject newInstance() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         return java().getDeclaredConstructor().newInstance();
     }
 }
