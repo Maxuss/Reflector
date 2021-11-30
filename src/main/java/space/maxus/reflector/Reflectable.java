@@ -1,6 +1,6 @@
 package space.maxus.reflector;
 
-import space.maxus.reflector.classes.RClass;
+import space.maxus.reflector.elements.RClass;
 
 public interface Reflectable {
     /**

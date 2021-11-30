@@ -1,4 +1,4 @@
-package space.maxus.reflector.classes;
+package space.maxus.reflector.elements;
 
 import space.maxus.reflector.exceptions.ClassInitializationException;
 

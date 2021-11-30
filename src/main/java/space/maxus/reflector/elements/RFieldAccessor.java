@@ -1,4 +1,4 @@
-package space.maxus.reflector.classes;
+package space.maxus.reflector.elements;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

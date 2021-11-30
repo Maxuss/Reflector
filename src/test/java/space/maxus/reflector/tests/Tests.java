@@ -2,8 +2,8 @@ package space.maxus.reflector.tests;
 
 import org.junit.jupiter.api.Test;
 import space.maxus.reflector.Reflector;
-import space.maxus.reflector.classes.RClass;
-import space.maxus.reflector.classes.RField;
+import space.maxus.reflector.elements.RClass;
+import space.maxus.reflector.elements.RField;
 import space.maxus.reflector.exceptions.ClassInitializationException;
 
 import java.util.Optional;

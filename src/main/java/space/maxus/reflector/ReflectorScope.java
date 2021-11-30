@@ -1,4 +1,8 @@
 package space.maxus.reflector;
 
-public interface ReflectorScope {
+public class ReflectorScope {
+
+    public boolean include(String pkg) {
+        return true;
+    }
 }
