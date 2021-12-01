@@ -2,7 +2,6 @@ package space.maxus.reflector.elements;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import space.maxus.reflector.exceptions.ClassInitializationException;
 import space.maxus.reflector.exceptions.FieldException;
 import space.maxus.reflector.exceptions.MethodException;
 import space.maxus.reflector.params.ParameterCollection;
