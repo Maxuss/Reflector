@@ -10,6 +10,12 @@ public interface RProperty extends Reflectable {
     boolean canAccess();
 
     /**
+     * Checks whether the property is static
+     * @return Whether it is possible to access the property without instance object
+     */
+    boolean isStatic();
+
+    /**
      * Sets the property to accessible or not
      * @param accessible Whether the property will be accessible
      */

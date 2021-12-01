@@ -102,6 +102,16 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
     }
 
     /**
+     * Checks whether the property is static
+     *
+     * @return Whether it is possible to access the property without instance object
+     */
+    @Override
+    public boolean isStatic() {
+        return java.canAccess(null);
+    }
+
+    /**
      * Sets the property to accessible or not
      *
      * @param accessible Whether the property will be accessible

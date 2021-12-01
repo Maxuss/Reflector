@@ -8,7 +8,7 @@ import space.maxus.reflector.exceptions.FieldException;
 
 import java.util.Optional;
 
-public class RField<TOwner, TReturn> implements Reflectable {
+public class RField<TOwner, TValue> implements Reflectable {
     @NotNull private final RClass<TOwner> objectClass;
 
     /**
@@ -28,7 +28,7 @@ public class RField<TOwner, TReturn> implements Reflectable {
      * @return Field accessor or null
      */
     @Nullable
-    public RFieldAccessor<TReturn, TOwner> access(@Nullable TOwner owner) {
+    public RFieldAccessor<TValue, TOwner> access(@Nullable TOwner owner) {
         try {
             return new RFieldAccessor<>(objectClass, owner, name);
         } catch (FieldException e) {
@@ -41,8 +41,8 @@ public class RField<TOwner, TReturn> implements Reflectable {
      * @return Field accessor or null
      */
     @Nullable
-    public RFieldAccessor<TReturn, TOwner> access() throws ClassInitializationException {
-        return access(objectClass.newInstance());
+    public RFieldAccessor<TValue, TOwner> access() throws ClassInitializationException {
+        return access(objectClass.construct());
     }
 
     /**
@@ -51,7 +51,7 @@ public class RField<TOwner, TReturn> implements Reflectable {
      * @return Optional-encapsulated field accessor
      */
     @NotNull
-    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess(@Nullable TOwner instance) {
+    public Optional<RFieldAccessor<TValue, TOwner>> tryAccess(@Nullable TOwner instance) {
         return Optional.ofNullable(access(instance));
     }
 
@@ -60,8 +60,8 @@ public class RField<TOwner, TReturn> implements Reflectable {
      * @return Optional-encapsulated field accessor
      */
     @NotNull
-    public Optional<RFieldAccessor<TReturn, TOwner>> tryAccess() throws ClassInitializationException {
-        return Optional.ofNullable(access(objectClass.newInstance()));
+    public Optional<RFieldAccessor<TValue, TOwner>> tryAccess() throws ClassInitializationException {
+        return Optional.ofNullable(access(objectClass.construct()));
     }
 
     /**

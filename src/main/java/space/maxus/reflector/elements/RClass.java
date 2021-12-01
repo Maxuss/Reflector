@@ -57,11 +57,13 @@ public class RClass<TObject> {
      * @return New instance of the class
      * @throws ClassInitializationException If java could not instantiate the class
      */
-    public TObject newInstance() throws ClassInitializationException {
+    public TObject construct() throws ClassInitializationException {
         try {
             return java.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new ClassInitializationException("Could not initialize class!" + e.getMessage());
         }
     }
+
+
 }
