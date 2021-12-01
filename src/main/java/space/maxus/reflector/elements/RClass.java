@@ -1,6 +1,7 @@
 package space.maxus.reflector.elements;
 
 import space.maxus.reflector.exceptions.ClassInitializationException;
+import space.maxus.reflector.exceptions.FieldException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -39,7 +40,11 @@ public class RClass<TObject> {
      * @return RField instance of the field
      */
     public <TValue> RField<TObject, TValue> getField(String name) {
-        return new RField<>(this, name);
+        try {
+            return new RField<>(this, name);
+        } catch (FieldException e) {
+            return null;
+        }
     }
 
     /**

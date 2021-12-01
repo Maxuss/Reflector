@@ -6,6 +6,7 @@ import space.maxus.reflector.Reflector;
 import space.maxus.reflector.exceptions.FieldException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Optional;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal", "unchecked"})
@@ -98,7 +99,11 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
      */
     @Override
     public boolean canAccess() {
-        return java.canAccess(inst);
+        try {
+            return java.canAccess(inst);
+        } catch(Exception e) {
+            return true;
+        }
     }
 
     /**
@@ -108,7 +113,7 @@ public class RFieldAccessor<TValue, TOwner> implements RProperty {
      */
     @Override
     public boolean isStatic() {
-        return java.canAccess(null);
+        return Modifier.isStatic(java.getModifiers());
     }
 
     /**

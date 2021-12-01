@@ -1,8 +1,9 @@
 package space.maxus.reflector.elements;
 
+import space.maxus.reflector.PossibleStatic;
 import space.maxus.reflector.Reflectable;
 
-public interface RProperty extends Reflectable {
+public interface RProperty extends Reflectable, PossibleStatic {
     /**
      * Checks if the property is accessible
      * @return Whether it is possible to access the property
@@ -13,6 +14,7 @@ public interface RProperty extends Reflectable {
      * Checks whether the property is static
      * @return Whether it is possible to access the property without instance object
      */
+    @Override
     boolean isStatic();
 
     /**

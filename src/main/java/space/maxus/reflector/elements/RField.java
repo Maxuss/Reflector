@@ -2,24 +2,32 @@ package space.maxus.reflector.elements;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import space.maxus.reflector.PossibleStatic;
 import space.maxus.reflector.Reflectable;
 import space.maxus.reflector.exceptions.ClassInitializationException;
 import space.maxus.reflector.exceptions.FieldException;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Optional;
 
-public class RField<TOwner, TValue> implements Reflectable {
+public class RField<TOwner, TValue> implements Reflectable, PossibleStatic {
     @NotNull private final RClass<TOwner> objectClass;
-
+    private final Field java;
     /**
      * Name of the field
      */
     @NotNull
     public final String name;
 
-    RField(@NotNull RClass<TOwner> owner,  @NotNull String name) {
+    RField(@NotNull RClass<TOwner> owner,  @NotNull String name) throws FieldException {
         objectClass = owner;
         this.name = name;
+        try {
+            java = objectClass.java.getField(name);
+        } catch (NoSuchFieldException e) {
+            throw new FieldException("Could not fidn field "+name+"! "+e.getMessage());
+        }
     }
 
     /**
@@ -70,5 +78,15 @@ public class RField<TOwner, TValue> implements Reflectable {
     @Override
     public RClass<?> owner() {
         return objectClass;
+    }
+
+    /**
+     * Checks whether the property is static
+     *
+     * @return Whether the property is static
+     */
+    @Override
+    public boolean isStatic() {
+        return Modifier.isStatic(java.getModifiers());
     }
 }
