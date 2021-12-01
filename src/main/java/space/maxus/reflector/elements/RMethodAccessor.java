@@ -8,7 +8,9 @@ import space.maxus.reflector.params.RParameter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("unchecked")
@@ -33,8 +35,9 @@ public class RMethodAccessor<TOwner, TReturn> implements RProperty {
      */
     @Nullable
     public TReturn invoke(Object... args) {
+        var argList = Arrays.stream(args).toList();
         try {
-            return (TReturn) java.invoke(inst, args);
+            return (TReturn) java.invoke(isStatic() ? null : inst, argList.isEmpty() ? new Object[0] : args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             return null;
         }
@@ -48,7 +51,7 @@ public class RMethodAccessor<TOwner, TReturn> implements RProperty {
     @Nullable
     public TReturn invoke(ParameterCollection params) {
         try {
-            return (TReturn) java.invoke(inst, params.stream().map(RParameter::value));
+            return (TReturn) java.invoke(isStatic() ? null : inst, params.isEmpty() ? new Object[0] : params.stream().map(RParameter::value).toArray());
         } catch (IllegalAccessException | InvocationTargetException e) {
             return null;
         }
@@ -61,7 +64,7 @@ public class RMethodAccessor<TOwner, TReturn> implements RProperty {
      */
     @Nullable
     public TReturn invoke(RParameter<?>... params) {
-        var list = Arrays.stream(params).toList();
+        var list = new ArrayList<>(Arrays.stream(params).toList());
         if(list.isEmpty())
             return invoke(new ParameterCollection());
         list.remove(params[0]);

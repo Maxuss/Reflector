@@ -8,7 +8,6 @@ import space.maxus.reflector.exceptions.MethodException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Optional;
 
 public class RMethod<TOwner, TReturn> implements Reflectable, PossibleStatic {
     private final RClass<TOwner> owner;
@@ -32,6 +31,22 @@ public class RMethod<TOwner, TReturn> implements Reflectable, PossibleStatic {
         return owner;
     }
 
+    /**
+     * Accesses the method if it is static
+     * @return Method accessor or null
+     */
+    @Nullable
+    public RMethodAccessor<TOwner, TReturn> access() {
+        if(isStatic())
+            return new RMethodAccessor<>(this.owner, java, null);
+        return null;
+    }
+
+    /**
+     * Accesses the method
+     * @param owner Instance of the class containing method
+     * @return Method accessor
+     */
     @NotNull
     public RMethodAccessor<TOwner, TReturn> access(@Nullable TOwner owner) {
         return new RMethodAccessor<>(this.owner, java, owner);

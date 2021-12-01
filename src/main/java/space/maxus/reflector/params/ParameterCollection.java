@@ -8,6 +8,22 @@ import java.util.*;
 public class ParameterCollection implements List<RParameter<?>> {
     private final ArrayList<RParameter<?>> params = new ArrayList<>();
 
+    public static final ParameterCollection EMPTY = new ParameterCollection();
+
+    public static ParameterCollection of(RParameter<?>... params) {
+        var coll = new ParameterCollection();
+        coll.addAll(Arrays.stream(params).toList());
+        return coll;
+    }
+
+    /**
+     * Unwraps the parameter collection to parameter array
+     * @return Unwrapped parameter array
+     */
+    public RParameter<?>[] unwrap() {
+        return params.toArray(new RParameter<?>[0]);
+    }
+
     /**
      * Returns the number of elements in this list.  If this list contains
      * more than {@code Integer.MAX_VALUE} elements, returns
