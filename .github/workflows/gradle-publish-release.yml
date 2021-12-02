@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*'
 
+
 env:
   APP_NAME: ${{ 'my-app' }}
 
