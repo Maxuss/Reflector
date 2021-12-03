@@ -16,7 +16,7 @@ jobs:
       - name: Get App Version
         id: get_version
         run: |
-          echo "::set-env name=APP_VERSION::$(sed -e 's/"//g' <<< cat ./build.gradle | grep 'version = ' | cut -d'=' -f2 | awk '{$1=$1};1')"
+          echo "::set-env name=APP_VERSION::$(sed -e 's/"//g' <<< cat ./build.gradle | grep 'version = ' | cut -d'=' -f2 | awk '{$1=$1};1')" | ls
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
