@@ -1,12 +1,10 @@
 name: Release
 
-on:
-  push:
-    tags:
-      - "v*"
+on: [push]
 
 env:
   APP_NAME: ${{ 'reflector' }}
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   create_release:
