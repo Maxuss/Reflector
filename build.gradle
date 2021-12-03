@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 group = 'space.maxus'
-version = "1.0-snapshot"
+version = "0.5-BETA"
 
 repositories {
     mavenCentral()
@@ -23,5 +23,5 @@ test {
 
 jar {
     baseName 'reflector'
-    version "1.0-snapshot"
+    version "0.5-BETA"
 }
