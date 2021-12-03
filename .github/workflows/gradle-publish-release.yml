@@ -1,6 +1,9 @@
 name: Release
 
-on: [push]
+on:
+  push:
+    tags:
+      - "update"
 
 env:
   APP_NAME: ${{ 'reflector' }}
@@ -52,7 +55,7 @@ jobs:
       - name: Build with Gradle
         id: build_gradle
         run: |
-          ./gradlew build
+          ./gradlew clean build jar
       - name: Upload Release Asset
         id: upload_release_asset
         uses: actions/upload-release-asset@v1
