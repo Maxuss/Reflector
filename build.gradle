@@ -2,8 +2,8 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-group 'space.maxus'
-version '1.0-SNAPSHOT'
+group = 'space.maxus'
+version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
