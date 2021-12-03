@@ -27,6 +27,7 @@ jobs:
           draft: false
           prerelease: false
 
+
   publish_release:
     name: Publish Release
     needs: create_release
