@@ -1,9 +1,6 @@
 name: Release
 
-on:
-  push:
-    tags:
-      - "update"
+on: [push]
 
 env:
   APP_NAME: ${{ 'reflector' }}
